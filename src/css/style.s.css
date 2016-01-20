@@ -1,0 +1,139 @@
+@charset "UTF-8";
+/*******************重置样式 *******************/
+* {
+  -webkit-tap-highlight-color: transparent;
+  outline: 0;
+}
+
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+}
+
+img {
+  border: 0 none;
+  vertical-align: top;
+}
+
+i, em {
+  font-style: normal;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+input, select, button, h1, h2, h3, h4, h5, h6 {
+  font-size: 100%;
+  font-family: inherit;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+a {
+  text-decoration: none;
+  color: #333;
+}
+
+html {
+  min-width: 100% !important;
+  min-height: 100% !important;
+}
+
+body {
+  width: 100% !important;
+  height: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  left: 50%;
+  background: #FFF;
+  font-size: 14px;
+  font-family: Helvetica, STHeiti STXihei, Microsoft JhengHei, Microsoft YaHei, Arial;
+  line-height: 1.5;
+  color: #666;
+  -webkit-text-size-adjust: 100% !important;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.g_cf:after {
+  display: block;
+  content: '\20';
+  clear: both;
+  height: 0;
+  visibility: hidden;
+}
+
+input {
+  -webkit-appearance: none;
+}
+
+.g_cf {
+  *zoom: 1;
+  *overflow: hidden;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/*引进图片合并给一个变量(后面会用到这个变量) vertical 垂直 horizontal 水平*/
+/*转换px到rem*/
+/*雪碧图mixin引块，pc和移动端因为目前编译不过GIF，故暂用png8*/
+/*带时间戳的图片,pc和移动端 ,$imgUrl必须带文件夹和文件名字符串,例"icon/pig.png"*/
+/*base64位的图片,pc和移动端 ,$imgUrl必须带文件夹和文件名字符串,例"icon/pig.png"*/
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi), (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .xin_tab:after, .xin_mark_panel .mark_box .item:after {
+    -webkit-transform: scaleY(0.5);
+    -webkit-transform-origin: 50% 100%;
+  }
+
+  .xin_tab a:before, .xin_mark_panel .mark_box:before {
+    -webkit-transform: scaleX(0.5);
+    -webkit-transform-origin: 0% 0%;
+  }
+
+  .xin_rec_list .info .tag span:after {
+    -webkit-transform: scale(0.5);
+    -webkit-transform-origin: 0% 0%;
+    bottom: -100%;
+    right: -100%;
+  }
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 3) {
+  .xin_tab:after,
+  .xin_mark_panel .mark_box .item:after {
+    -webkit-transform: scaleY(0.333);
+  }
+
+  .xin_rec_list .info .tag span:after {
+    -webkit-transform: scale(0.333);
+    -webkit-transform-origin: 0% 0%;
+    bottom: -200%;
+    right: -200%;
+  }
+}
+@media only screen and (-webkit-device-pixel-ratio: 1.5) {
+  .xin_tab:after,
+  .xin_mark_panel .mark_box .item:after {
+    -webkit-transform: scaleY(0.666);
+  }
+
+  .xin_rec_list .info .tag span:after {
+    -webkit-transform: scale(0.666);
+    bottom: -50%;
+    right: -50%;
+  }
+}

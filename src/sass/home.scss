@@ -1,0 +1,263 @@
+@import "compass/utilities/sprites";
+
+$browser-default-font-size: 20px !default;
+@mixin sprite-background($map, $sprite) {
+    height: ceil(image-height(sprite-file($map, $sprite)) / 2);
+    width: ceil(image-width(sprite-file($map, $sprite)) / 2);
+
+    $x: floor(nth(sprite-position($map, $sprite), 1) / 2);
+    $y: floor(nth(sprite-position($map, $sprite), 2) / 2);
+
+    background: sprite-url($map) no-repeat $x $y;
+    background-size: ceil(image-width(sprite-path($map)) / 2) ceil(image-height(sprite-path($map)) / 2);
+}
+
+//pxTorem
+@function pxTorem($px) {
+	@if $px == 0 {
+		@return 0;
+	}
+	@else {
+		@return $px / $browser-default-font-size * 1rem;
+	}
+
+}
+@mixin flexbox() {
+	display: box;
+	display: -ms-box;
+	display: -webkit-box;
+	display: flex;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+}
+
+@mixin flex($values) {
+  display: block;
+  -webkit-box-flex: $values;
+  -moz-box-flex:  $values;
+  -webkit-flex:  $values;
+  -ms-flex:  $values;
+  flex:  $values;
+}
+
+@mixin bp($sprite,$name){
+	$pos_x1: pxTorem(floor(nth(sprite-position($sprite, $name), 1) / 2));
+	$pos_y1: pxTorem(floor(nth(sprite-position($sprite, $name), 2) / 2));
+	background-position: $pos_x1 $pos_y1;
+}
+
+//多参数转rem
+@function rem($values) {
+  $list: (); /* 存储转变后的值 */
+
+  @each $value in $values { /* 遍历传入的值 */
+
+    @if $value == 0 or $value == auto { /* 0 和 auto 原样返回 */
+      $list: append($list, $value);
+    }
+
+    @else {
+      $unit: unit($value);    /* 取单位 */
+      $val: parseInt($value); /* 取数字值 */
+
+      @if $unit == "px" {  /* 转换px值 */
+        $list: append($list, ($val / $pixelBase + rem));
+      }
+
+      @if $unit == "rem" { /* rem值不转换 */
+        $list: append($list, $value);
+      }
+    }
+  }
+
+  @return $list; /* 返回值列表 */
+}
+//文字省略号
+@mixin textoverflow{
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+//垂直和水平都居中
+@mixin centers($width:100px,$height:100px){
+	position: absolute;
+	left:0;right:0;bottom:0;top:0;
+	margin:auto;
+	width:$width;
+	height:$height;
+}
+//对话框 垂直水平居中
+@mixin dialog(){
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform:translate3d(-50%,-50%,0);
+	-webkit-transform:translate3d(-50%,-50%,0);
+}
+
+//动画
+@mixin animation($value...){
+	-webkit-animation:$value;
+	animation:$value;
+}
+//阴影
+@mixin shadowbox($value...){
+    -webkit-box-shadow:$value;
+    box-shadow:$value;  
+}
+//浏览器前缀
+@mixin css3($property, $value) {
+    @each $prefix in -webkit-, -moz-, -ms-, -o-, '' {
+        #{$prefix}#{$property}: $value;
+    }
+}
+
+// 静态图片
+@mixin staticImg($path,$toRem:true,$toBase64 : false){
+	$width: ceil(image-width($path) / 2);
+	$height: ceil(image-height($path) / 2);
+	@if $toRem {
+		$width: pxTorem($width);
+		$height: pxTorem($height);
+	}
+	width: $width;
+	height: $height;
+	@if $toBase64 {
+		background-image:inline-image($path);
+	} @else { 
+		background-image:image-url($path);
+	}
+	background-size:100% auto;
+	background-repeat:no-repeat;
+}
+
+//compass 二倍图转rem
+@mixin s2b($sprite, $name, $toRem:true) {
+	$width: ceil(image-width(sprite-file($sprite, $name)) / 2);
+	$height: ceil(image-height(sprite-file($sprite, $name)) / 2);
+	$pos_x: floor(nth(sprite-position($sprite, $name), 1) / 2);
+	$pos_y: floor(nth(sprite-position($sprite, $name), 2) / 2);
+	
+	$size_w: ceil(image-width(sprite-path($sprite)) / 2);
+	$size_h: ceil(image-height(sprite-path($sprite)) / 2);
+	@if $toRem {
+		$pos_x: pxTorem($pos_x);
+		$pos_y: pxTorem($pos_y);
+		$width: pxTorem($width);
+		$height: pxTorem($height);
+		$size_w: pxTorem($size_w);
+		$size_h: pxTorem($size_h);
+	}
+	
+	background: sprite-url($sprite) no-repeat $pos_x $pos_y;
+	background-size: $size_w $size_h;
+	height: $height;
+	width: $width;
+}
+
+@mixin s2bsmall($sprite, $name, $toRem:true) {
+	$width: ceil(image-width(sprite-file($sprite, $name)) / 2);
+	$height: ceil(image-height(sprite-file($sprite, $name)) / 2);
+	$pos_x: floor(nth(sprite-position($sprite, $name), 1) / 2);
+	$pos_y: floor(nth(sprite-position($sprite, $name), 2) / 2);
+	
+	$size_w: ceil(image-width(sprite-path($sprite)) / 2);
+	$size_h: ceil(image-height(sprite-path($sprite)) / 2);
+	@if $toRem {
+		$pos_x: pxTorem($pos_x);
+		$pos_y: pxTorem($pos_y);
+		$width: pxTorem($width);
+		$height: pxTorem($height);
+		$size_w: pxTorem($size_w);
+		$size_h: pxTorem($size_h);
+	}
+	
+	background: sprite-url($sprite) no-repeat $pos_x * 0.9 $pos_y * 0.9;
+	background-size: $size_w * 0.9 $size_h * 0.9;
+	height: $height * 0.9;
+	width: $width * 0.9;
+}
+@mixin s2banimation($sprite, $name, $toRem:true) {
+	$width: ceil(image-width(sprite-file($sprite, $name)) / 2);
+	$height: ceil(image-height(sprite-file($sprite, $name)) / 2);
+	$pos_x: floor(nth(sprite-position($sprite, $name), 1) / 2);
+	$pos_y: floor(nth(sprite-position($sprite, $name), 2) / 2);
+	
+	$size_w: ceil(image-width(sprite-path($sprite)) / 2);
+	$size_h: ceil(image-height(sprite-path($sprite)) / 2);
+	@if $toRem {
+		$pos_x: pxTorem($pos_x);
+		$pos_y: pxTorem($pos_y);
+		$width: pxTorem($width);
+		$height: pxTorem($height);
+		$size_w: pxTorem($size_w);
+		$size_h: pxTorem($size_h);
+	}
+	
+	background-position: $pos_x $pos_y;
+	// background-size: $size_w $size_h;
+
+}
+
+
+@mixin horizontal-center($map, $sprite) {
+	$width: ceil(image-width(sprite-file($map, $sprite)) / 2);
+	$width: pxTorem($width);
+
+	left: 50%;
+	margin-left: - $width/2;
+}
+
+@mixin horizontal-center-small($map, $sprite) {
+	$width: ceil(image-width(sprite-file($map, $sprite)) / 2);
+	$width: pxTorem($width);
+
+	left: 50%;
+	margin-left: - $width/2*0.9;
+}
+@mixin vertical-center($map, $sprite) {
+	$height: ceil(image-height(sprite-file($map, $sprite)) / 2);
+	$height: pxTorem($height);
+
+	top: 50%;
+	margin-top: - $height/2;
+}
+
+@function getwidth($map, $sprite){
+	$width: ceil(image-width(sprite-file($map, $sprite)) / 2);
+	$width: pxTorem($width);
+
+	@return $width;
+}
+
+@function getheight($map, $sprite){
+	$height: ceil(image-height(sprite-file($map, $sprite)) / 2);
+	$height: pxTorem($height);
+
+	@return $height;
+}
+
+
+// $home: sprite-map("home/*.png", $spacing: 4px, $layout: vertical);
+
+// .unuse {
+// 	@include sprite-background($home,'starl');
+	
+	
+	
+// }
+
+body,div,img,a,span{
+	margin: 0;
+	padding: 0;
+}
+body {
+	font-family: Helvetica,STHeiti STXihei, Microsoft JhengHei, Microsoft YaHei, Arial;
+}
+a{
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+img {
+	text-indent: -9999px;
+}
